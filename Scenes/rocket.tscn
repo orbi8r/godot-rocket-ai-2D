@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://5h2jwsq22xva"]
+
+[ext_resource type="Script" path="res://Scenes/rocket.gd" id="1_adxh4"]
+[ext_resource type="Texture2D" uid="uid://kekfn7b782tq" path="res://icon.svg" id="2_qb1q0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oik3e"]
+size = Vector2(90, 220)
+
+[node name="Rocket" type="RigidBody2D"]
+script = ExtResource("1_adxh4")
+
+[node name="RocketSprite" type="Sprite2D" parent="."]
+scale = Vector2(0.679688, 1.70313)
+texture = ExtResource("2_qb1q0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, -0.5)
+shape = SubResource("RectangleShape2D_oik3e")
+
+[node name="Thrusterpoint" type="Marker2D" parent="."]
+position = Vector2(0, 112)
+
+[node name="RocketNozzle" type="Sprite2D" parent="Thrusterpoint"]
+position = Vector2(0, 9)
+scale = Vector2(0.210938, 0.328125)
+texture = ExtResource("2_qb1q0")

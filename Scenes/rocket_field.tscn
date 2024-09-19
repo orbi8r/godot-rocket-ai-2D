@@ -1,8 +1,24 @@
-[gd_scene load_steps=4 format=3 uid="uid://c8m25w5bqs3dd"]
+[gd_scene load_steps=7 format=3 uid="uid://c8m25w5bqs3dd"]
 
 [ext_resource type="Script" path="res://Scenes/rocket_field.gd" id="1_2b4ro"]
 [ext_resource type="Texture2D" uid="uid://kekfn7b782tq" path="res://icon.svg" id="2_b76g4"]
 [ext_resource type="PackedScene" uid="uid://5h2jwsq22xva" path="res://Scenes/rocket.tscn" id="2_qvlrg"]
+[ext_resource type="Texture2D" uid="uid://dw12lmufoity" path="res://Textures/SeaBorder/SeaBorder0.png" id="4_nycqn"]
+[ext_resource type="Texture2D" uid="uid://btmkunp1wwrrb" path="res://Textures/SeaBorder/SeaBorder1.png" id="5_x7e3i"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g8h1j"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_nycqn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_x7e3i")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="RocketField" type="Node2D"]
 script = ExtResource("1_2b4ro")
@@ -12,11 +28,18 @@ script = ExtResource("1_2b4ro")
 [node name="Camera2D" type="Camera2D" parent="Rocket"]
 zoom = Vector2(0.6, 0.6)
 process_callback = 0
+limit_left = -15000
+limit_top = -30000
+limit_right = 15000
+limit_bottom = 1200
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
-drag_bottom_margin = 0.1
+drag_left_margin = 0.4
+drag_top_margin = 0.6
+drag_right_margin = 0.4
+drag_bottom_margin = 0.0
 editor_draw_limits = true
 
 [node name="Ground" type="StaticBody2D" parent="."]
@@ -30,3 +53,10 @@ texture = ExtResource("2_b76g4")
 position = Vector2(577.5, 606.5)
 scale = Vector2(8.97656, 0.617188)
 polygon = PackedVector2Array(64, -61.1, 64, 59, 59.6, 64, -60.2, 64, -64, 61, -64, 58, -64, -59, -59, -63.8, 59.2, -64)
+
+[node name="SeaBorder" type="AnimatedSprite2D" parent="Ground"]
+position = Vector2(0.000155091, -14394.5)
+scale = Vector2(7.32422, 7.61597)
+sprite_frames = SubResource("SpriteFrames_g8h1j")
+autoplay = "default"
+frame_progress = 0.598417

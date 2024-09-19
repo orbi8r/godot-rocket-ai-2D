@@ -1,26 +1,80 @@
-[gd_scene load_steps=4 format=3 uid="uid://5h2jwsq22xva"]
+[gd_scene load_steps=13 format=3 uid="uid://5h2jwsq22xva"]
 
 [ext_resource type="Script" path="res://Scenes/rocket.gd" id="1_adxh4"]
-[ext_resource type="Texture2D" uid="uid://kekfn7b782tq" path="res://icon.svg" id="2_qb1q0"]
+[ext_resource type="Texture2D" uid="uid://cyyartbmij5ck" path="res://Textures/ThrusterNozzle/ThrusterNozzle0.png" id="2_tl34f"]
+[ext_resource type="Texture2D" uid="uid://bnc33vw78s052" path="res://Textures/RocketBody/RocketBody0.png" id="3_cjtix"]
+[ext_resource type="Texture2D" uid="uid://b30ms27an8qi5" path="res://Textures/ThrusterNozzle/ThrusterNozzle1.png" id="3_yiw74"]
+[ext_resource type="Texture2D" uid="uid://kskk8a7m85o1" path="res://Textures/ThrusterNozzle/ThrusterNozzle2.png" id="4_02gjn"]
+[ext_resource type="Texture2D" uid="uid://ct0p25h6ae85o" path="res://Textures/RocketBody/RocketBody4.png" id="4_i5q3m"]
+[ext_resource type="Texture2D" uid="uid://dmabvshglvp26" path="res://Textures/ThrusterNozzle/ThrusterNozzle3.png" id="5_gyn0m"]
+[ext_resource type="Texture2D" uid="uid://d3dmf5i13jf6w" path="res://Textures/RocketBody/RocketBody1.png" id="5_umfp3"]
+[ext_resource type="Texture2D" uid="uid://chkyxpienv18j" path="res://Textures/RocketBody/RocketBody2.png" id="6_6tnhl"]
+[ext_resource type="Texture2D" uid="uid://dfikuksxipwdc" path="res://Textures/RocketBody/RocketBody3.png" id="7_vevx2"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_oik3e"]
-size = Vector2(90, 220)
+[sub_resource type="SpriteFrames" id="SpriteFrames_n3sgd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_tl34f")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_yiw74")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_02gjn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_gyn0m")
+}],
+"loop": true,
+"name": &"fire",
+"speed": 15.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_e2aqd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_i5q3m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_vevx2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_6tnhl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_umfp3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_cjtix")
+}],
+"loop": false,
+"name": &"LandingGear",
+"speed": 15.0
+}]
 
 [node name="Rocket" type="RigidBody2D"]
 script = ExtResource("1_adxh4")
 
-[node name="RocketSprite" type="Sprite2D" parent="."]
-scale = Vector2(0.679688, 1.70313)
-texture = ExtResource("2_qb1q0")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1, -0.5)
-shape = SubResource("RectangleShape2D_oik3e")
-
 [node name="Thrusterpoint" type="Marker2D" parent="."]
 position = Vector2(0, 112)
 
-[node name="RocketNozzle" type="Sprite2D" parent="Thrusterpoint"]
-position = Vector2(0, 9)
-scale = Vector2(0.210938, 0.328125)
-texture = ExtResource("2_qb1q0")
+[node name="RocketNozzle" type="AnimatedSprite2D" parent="Thrusterpoint"]
+position = Vector2(0, 31)
+scale = Vector2(0.08, 0.08)
+sprite_frames = SubResource("SpriteFrames_n3sgd")
+frame_progress = 0.202785
+
+[node name="RocketBody" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.3, 0.3)
+sprite_frames = SubResource("SpriteFrames_e2aqd")
+animation = &"LandingGear"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-57, 124, 56, 124, 14, 87, 13, -72, 6, -99, 0, -101, -6, -99, -14, -72, -14, 87, -57, 124)

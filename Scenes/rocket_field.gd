@@ -30,6 +30,6 @@ func _process(delta):
 	if (rocketpos_lastframe.y-rocketmain.global_position.y)**2 < 1:
 		camzoom = Vector2(1,1)
 	else:
-		camzoom = Vector2(0.5,0.5)
+		camzoom = Vector2(0.2,0.2)
 	rocketpos_lastframe = rocketmain.global_position
 	camera_2d.zoom = lerp(camera_2d.zoom, camzoom, 0.008)

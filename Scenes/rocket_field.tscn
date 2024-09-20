@@ -1,10 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://c8m25w5bqs3dd"]
+[gd_scene load_steps=9 format=3 uid="uid://c8m25w5bqs3dd"]
 
 [ext_resource type="Script" path="res://Scenes/rocket_field.gd" id="1_2b4ro"]
-[ext_resource type="Texture2D" uid="uid://kekfn7b782tq" path="res://icon.svg" id="2_b76g4"]
 [ext_resource type="PackedScene" uid="uid://5h2jwsq22xva" path="res://Scenes/rocket.tscn" id="2_qvlrg"]
+[ext_resource type="Texture2D" uid="uid://dfxq8t4twewyb" path="res://Textures/SeaBorder/Boat0.png" id="4_euwrv"]
 [ext_resource type="Texture2D" uid="uid://dw12lmufoity" path="res://Textures/SeaBorder/SeaBorder0.png" id="4_nycqn"]
 [ext_resource type="Texture2D" uid="uid://btmkunp1wwrrb" path="res://Textures/SeaBorder/SeaBorder1.png" id="5_x7e3i"]
+[ext_resource type="Texture2D" uid="uid://bfiy4wo065k4r" path="res://Textures/Sky/Sky0.png" id="6_td6ox"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4gn0q"]
+size = Vector2(1793, 172)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_g8h1j"]
 animations = [{
@@ -22,6 +26,23 @@ animations = [{
 
 [node name="RocketField" type="Node2D"]
 script = ExtResource("1_2b4ro")
+
+[node name="Sky" type="Sprite2D" parent="."]
+position = Vector2(-4.9992, -14002.5)
+scale = Vector2(7.34326, 7.84351)
+texture = ExtResource("6_td6ox")
+
+[node name="Ship" type="StaticBody2D" parent="."]
+position = Vector2(-572, 0)
+
+[node name="ShipSprite" type="Sprite2D" parent="Ship"]
+position = Vector2(899, 99)
+scale = Vector2(2, 2)
+texture = ExtResource("4_euwrv")
+
+[node name="ShipHitbox" type="CollisionShape2D" parent="Ship"]
+position = Vector2(892.5, 621)
+shape = SubResource("RectangleShape2D_4gn0q")
 
 [node name="Rocket" parent="." instance=ExtResource("2_qvlrg")]
 
@@ -42,21 +63,9 @@ drag_right_margin = 0.4
 drag_bottom_margin = 0.0
 editor_draw_limits = true
 
-[node name="Ground" type="StaticBody2D" parent="."]
-
-[node name="GroundSprite" type="Sprite2D" parent="Ground"]
-position = Vector2(577.5, 606.5)
-scale = Vector2(8.97656, 0.617188)
-texture = ExtResource("2_b76g4")
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Ground"]
-position = Vector2(577.5, 606.5)
-scale = Vector2(8.97656, 0.617188)
-polygon = PackedVector2Array(64, -61.1, 64, 59, 59.6, 64, -60.2, 64, -64, 61, -64, 58, -64, -59, -59, -63.8, 59.2, -64)
-
-[node name="SeaBorder" type="AnimatedSprite2D" parent="Ground"]
-position = Vector2(0.000155091, -14394.5)
-scale = Vector2(7.32422, 7.61597)
+[node name="SeaBorder" type="AnimatedSprite2D" parent="."]
+position = Vector2(5, -14466.3)
+scale = Vector2(7.32422, 7.66565)
 sprite_frames = SubResource("SpriteFrames_g8h1j")
 autoplay = "default"
 frame_progress = 0.598417

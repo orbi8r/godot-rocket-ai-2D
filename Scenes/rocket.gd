@@ -23,10 +23,14 @@ func _process(delta):
 	
 	
 	# Human inputs
-	if Input.is_action_pressed("Left") and thrusterpoint.rotation < deg_to_rad(45):
-		thrusterpoint.rotate(deg_to_rad(1))
-	elif Input.is_action_pressed("Right") and thrusterpoint.rotation > deg_to_rad(-45):
+	if Input.is_action_pressed("Left") and thrusterpoint.rotation < deg_to_rad(60):
+		thrusterpoint.rotate(deg_to_rad(2))
+	elif Input.is_action_pressed("Right") and thrusterpoint.rotation > deg_to_rad(-60):
+		thrusterpoint.rotate(deg_to_rad(-2))
+	elif thrusterpoint.rotation != 0 and thrusterpoint.rotation > 0:
 		thrusterpoint.rotate(deg_to_rad(-1))
+	elif thrusterpoint.rotation != 0 and thrusterpoint.rotation < 0:
+		thrusterpoint.rotate(deg_to_rad(1))
 		
 	if Input.is_action_just_pressed("thrust"):
 		is_thrusting = true

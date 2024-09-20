@@ -59,7 +59,8 @@ animations = [{
 "speed": 15.0
 }]
 
-[node name="Rocket" type="RigidBody2D"]
+[node name="Rocket" type="RigidBody2D" groups=["Rockets"]]
+angular_damp = 10.0
 script = ExtResource("1_adxh4")
 
 [node name="Thrusterpoint" type="Marker2D" parent="."]
@@ -69,7 +70,7 @@ position = Vector2(0, 112)
 position = Vector2(0, 31)
 scale = Vector2(0.08, 0.08)
 sprite_frames = SubResource("SpriteFrames_n3sgd")
-frame_progress = 0.202785
+frame_progress = 0.737687
 
 [node name="RocketBody" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.3, 0.3)

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dw12lmufoity"
-path="res://.godot/imported/SeaBorder0.png-316a3aa171d9938e2384a083d805767c.ctex"
+uid="uid://bvbmmoxu771x8"
+path="res://.godot/imported/AnchorIcon0.png-d88024b9bf1933c6dc29bce6744cd36b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/SeaBorder/SeaBorder0.png"
-dest_files=["res://.godot/imported/SeaBorder0.png-316a3aa171d9938e2384a083d805767c.ctex"]
+source_file="res://Textures/ui/AnchorIcon0.png"
+dest_files=["res://.godot/imported/AnchorIcon0.png-d88024b9bf1933c6dc29bce6744cd36b.ctex"]
 
 [params]
 

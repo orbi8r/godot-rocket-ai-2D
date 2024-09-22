@@ -535,25 +535,28 @@ func _reset_agents(agents = all_agents):
 func _get_obs_from_agents(agents: Array = all_agents):
 	var obs = []
 	for agent in agents:
-		obs.append(agent.get_obs())
+		if agent != null:
+			obs.append(agent.get_obs())
 	return obs
 
 
 func _get_reward_from_agents(agents: Array = agents_training):
 	var rewards = []
 	for agent in agents:
-		rewards.append(agent.get_reward())
-		agent.zero_reward()
+		if agent != null:
+			rewards.append(agent.get_reward())
+			agent.zero_reward()
 	return rewards
 
 
 func _get_done_from_agents(agents: Array = agents_training):
 	var dones = []
 	for agent in agents:
-		var done = agent.get_done()
-		if done:
-			agent.set_done_false()
-		dones.append(done)
+		if agent != null:
+			var done = agent.get_done()
+			if done:
+				agent.set_done_false()
+			dones.append(done)
 	return dones
 
 

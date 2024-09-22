@@ -1,11 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://c8m25w5bqs3dd"]
+[gd_scene load_steps=15 format=3 uid="uid://c8m25w5bqs3dd"]
 
 [ext_resource type="Script" path="res://Scenes/rocket_field.gd" id="1_2b4ro"]
-[ext_resource type="PackedScene" uid="uid://5h2jwsq22xva" path="res://Scenes/rocket.tscn" id="2_qvlrg"]
-[ext_resource type="Texture2D" uid="uid://dfxq8t4twewyb" path="res://Textures/SeaBorder/Boat0.png" id="4_euwrv"]
-[ext_resource type="Texture2D" uid="uid://dw12lmufoity" path="res://Textures/SeaBorder/SeaBorder0.png" id="4_nycqn"]
-[ext_resource type="Texture2D" uid="uid://btmkunp1wwrrb" path="res://Textures/SeaBorder/SeaBorder1.png" id="5_x7e3i"]
+[ext_resource type="Texture2D" uid="uid://dfxq8t4twewyb" path="res://Textures/Sky/Boat0.png" id="4_euwrv"]
+[ext_resource type="Texture2D" uid="uid://dw12lmufoity" path="res://Textures/Sky/SeaBorder0.png" id="4_nycqn"]
+[ext_resource type="Texture2D" uid="uid://btmkunp1wwrrb" path="res://Textures/Sky/SeaBorder1.png" id="5_x7e3i"]
+[ext_resource type="Texture2D" uid="uid://bvbmmoxu771x8" path="res://Textures/ui/AnchorIcon0.png" id="6_ik0nl"]
 [ext_resource type="Texture2D" uid="uid://bfiy4wo065k4r" path="res://Textures/Sky/Sky0.png" id="6_td6ox"]
+[ext_resource type="Script" path="res://addons/godot_rl_agents/sync.gd" id="7_7kg0d"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4gn0q"]
 size = Vector2(1793, 172)
@@ -24,48 +25,182 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="RocketField" type="Node2D"]
-script = ExtResource("1_2b4ro")
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7biut"]
+size = Vector2(500, 5)
 
-[node name="Sky" type="Sprite2D" parent="."]
+[sub_resource type="FontFile" id="FontFile_ogswd"]
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/16/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/70/0 = Vector2(0, 0)
+cache/0/70/0/ascent = 0.0
+cache/0/70/0/descent = 0.0
+cache/0/70/0/underline_position = 0.0
+cache/0/70/0/underline_thickness = 0.0
+cache/0/70/0/scale = 1.0
+cache/0/70/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/70/0/kerning_overrides/70/0 = Vector2(0, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_1ir4q"]
+font = SubResource("FontFile_ogswd")
+font_size = 70
+font_color = Color(0, 0, 0, 1)
+outline_size = 7
+
+[sub_resource type="FontFile" id="FontFile_sq6pc"]
+subpixel_positioning = 0
+msdf_pixel_range = 14
+msdf_size = 128
+cache/0/30/0/ascent = 0.0
+cache/0/30/0/descent = 0.0
+cache/0/30/0/underline_position = 0.0
+cache/0/30/0/underline_thickness = 0.0
+cache/0/30/0/scale = 1.0
+cache/0/30/0/kerning_overrides/30/0 = Vector2(0, 0)
+cache/0/30/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/16/0/kerning_overrides/30/0 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/16/0 = Vector2(0, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_dfirq"]
+line_spacing = 10.0
+font = SubResource("FontFile_sq6pc")
+font_size = 30
+font_color = Color(0, 0, 0, 1)
+outline_size = 2
+shadow_color = Color(1, 1, 1, 0.992157)
+
+[node name="RocketField" type="Node2D"]
+position = Vector2(0, 28000)
+script = ExtResource("1_2b4ro")
+number_of_rockets = 3
+
+[node name="Scene" type="Node2D" parent="."]
+
+[node name="Sky" type="Sprite2D" parent="Scene"]
 position = Vector2(-4.9992, -14002.5)
 scale = Vector2(7.34326, 7.84351)
 texture = ExtResource("6_td6ox")
 
-[node name="Ship" type="StaticBody2D" parent="."]
-position = Vector2(-572, 0)
+[node name="Ship" type="StaticBody2D" parent="Scene"]
 
-[node name="ShipSprite" type="Sprite2D" parent="Ship"]
+[node name="ShipSprite" type="Sprite2D" parent="Scene/Ship"]
 position = Vector2(899, 99)
 scale = Vector2(2, 2)
 texture = ExtResource("4_euwrv")
 
-[node name="ShipHitbox" type="CollisionShape2D" parent="Ship"]
+[node name="ShipHitbox" type="CollisionShape2D" parent="Scene/Ship"]
 position = Vector2(892.5, 621)
 shape = SubResource("RectangleShape2D_4gn0q")
 
-[node name="Rocket" parent="." instance=ExtResource("2_qvlrg")]
-
-[node name="Camera2D" type="Camera2D" parent="Rocket"]
-zoom = Vector2(0.6, 0.6)
-process_callback = 0
-limit_left = -15000
-limit_top = -30000
-limit_right = 15000
-limit_bottom = 1200
-position_smoothing_enabled = true
-position_smoothing_speed = 10.0
-drag_horizontal_enabled = true
-drag_vertical_enabled = true
-drag_left_margin = 0.4
-drag_top_margin = 0.6
-drag_right_margin = 0.4
-drag_bottom_margin = 0.0
-editor_draw_limits = true
-
-[node name="SeaBorder" type="AnimatedSprite2D" parent="."]
+[node name="SeaBorder" type="AnimatedSprite2D" parent="Scene"]
 position = Vector2(5, -14466.3)
 scale = Vector2(7.32422, 7.66565)
 sprite_frames = SubResource("SpriteFrames_g8h1j")
 autoplay = "default"
 frame_progress = 0.598417
+
+[node name="Blackbox" type="Node2D" parent="Scene"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Scene/Blackbox"]
+position = Vector2(0, 3000)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scene/Blackbox/StaticBody2D"]
+position = Vector2(0, -250)
+shape = SubResource("RectangleShape2D_7biut")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Scene/Blackbox"]
+position = Vector2(0, 3000)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scene/Blackbox/StaticBody2D2"]
+position = Vector2(0, 250)
+shape = SubResource("RectangleShape2D_7biut")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="Scene/Blackbox"]
+position = Vector2(0, 3000)
+rotation = 1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scene/Blackbox/StaticBody2D3"]
+position = Vector2(0, -250)
+shape = SubResource("RectangleShape2D_7biut")
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="Scene/Blackbox"]
+position = Vector2(0, 3000)
+rotation = 1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scene/Blackbox/StaticBody2D4"]
+position = Vector2(0, 250)
+shape = SubResource("RectangleShape2D_7biut")
+
+[node name="AnchorIcon" type="Sprite2D" parent="Scene"]
+position = Vector2(-397, 536)
+texture = ExtResource("6_ik0nl")
+
+[node name="UI" type="CanvasLayer" parent="."]
+offset = Vector2(0, -28150)
+transform = Transform2D(1, 0, 0, 1, 0, -28150)
+
+[node name="BoxContainer" type="BoxContainer" parent="UI"]
+offset_left = 21.0
+offset_top = 28151.0
+offset_right = 328.0
+offset_bottom = 28498.0
+vertical = true
+
+[node name="Generation" type="Label" parent="UI/BoxContainer"]
+layout_mode = 2
+text = "Gen:"
+label_settings = SubResource("LabelSettings_1ir4q")
+
+[node name="TimeLeft" type="Label" parent="UI/BoxContainer"]
+layout_mode = 2
+text = "Time: "
+label_settings = SubResource("LabelSettings_dfirq")
+
+[node name="RocketsLeft" type="Label" parent="UI/BoxContainer"]
+layout_mode = 2
+text = "Rockets Left: "
+label_settings = SubResource("LabelSettings_dfirq")
+
+[node name="Height" type="Label" parent="UI/BoxContainer"]
+layout_mode = 2
+text = "Height:"
+label_settings = SubResource("LabelSettings_dfirq")
+
+[node name="Velocity" type="Label" parent="UI/BoxContainer"]
+layout_mode = 2
+text = "Velocity:"
+label_settings = SubResource("LabelSettings_dfirq")
+
+[node name="SuccessfulLandings" type="Label" parent="UI/BoxContainer"]
+layout_mode = 2
+text = "Landings:"
+label_settings = SubResource("LabelSettings_dfirq")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI"]
+offset_left = 24.0
+offset_top = 28486.0
+offset_right = 143.0
+offset_bottom = 28523.0
+
+[node name="Prev" type="Button" parent="UI/HBoxContainer"]
+layout_mode = 2
+text = "< Prev"
+
+[node name="Next" type="Button" parent="UI/HBoxContainer"]
+layout_mode = 2
+text = "Next >"
+
+[node name="Sync" type="Node" parent="."]
+script = ExtResource("7_7kg0d")
+speed_up = 10.0
+
+[connection signal="pressed" from="UI/HBoxContainer/Prev" to="." method="_on_prev_pressed"]
+[connection signal="pressed" from="UI/HBoxContainer/Next" to="." method="_on_next_pressed"]

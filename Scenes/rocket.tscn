@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://5h2jwsq22xva"]
+[gd_scene load_steps=20 format=3 uid="uid://5h2jwsq22xva"]
 
 [ext_resource type="Script" path="res://Scenes/rocket.gd" id="1_adxh4"]
 [ext_resource type="Texture2D" uid="uid://cyyartbmij5ck" path="res://Textures/ThrusterNozzle/ThrusterNozzle0.png" id="2_tl34f"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://d3dmf5i13jf6w" path="res://Textures/RocketBody/RocketBody1.png" id="5_umfp3"]
 [ext_resource type="Texture2D" uid="uid://chkyxpienv18j" path="res://Textures/RocketBody/RocketBody2.png" id="6_6tnhl"]
 [ext_resource type="Texture2D" uid="uid://dfikuksxipwdc" path="res://Textures/RocketBody/RocketBody3.png" id="7_vevx2"]
+[ext_resource type="Script" path="res://Scenes/AIController2D.gd" id="11_yu1wm"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_n3sgd"]
 animations = [{
@@ -36,6 +37,43 @@ animations = [{
 "speed": 15.0
 }]
 
+[sub_resource type="Curve" id="Curve_rexqb"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_wxftn"]
+curve = SubResource("Curve_rexqb")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_umyk3"]
+particle_flag_disable_z = true
+angle_min = -90.0
+angle_max = 90.0
+inherit_velocity_ratio = 0.1
+direction = Vector3(0, 1, 0)
+spread = 15.0
+initial_velocity_min = 1000.0
+initial_velocity_max = 10000.0
+gravity = Vector3(0, 98, 0)
+linear_accel_min = 100.0
+linear_accel_max = 100.0
+damping_min = 99.99
+damping_max = 100.0
+turbulence_enabled = true
+turbulence_influence_over_life = SubResource("CurveTexture_wxftn")
+
+[sub_resource type="Gradient" id="Gradient_0prjm"]
+offsets = PackedFloat32Array(0, 0.00649351, 0.37013, 0.74026)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 0.990355, 1, 0.602273, 1, 0.913725, 0.133333, 0.129412, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_y2464"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_07nlj"]
+width = 3
+height = 20
+in_3d_space = true
+color_ramp = SubResource("Gradient_0prjm")
+noise = SubResource("FastNoiseLite_y2464")
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_e2aqd"]
 animations = [{
 "frames": [{
@@ -60,8 +98,10 @@ animations = [{
 }]
 
 [node name="Rocket" type="RigidBody2D" groups=["Rockets"]]
+collision_layer = 2
 angular_damp = 10.0
 script = ExtResource("1_adxh4")
+thrustforce = 100
 
 [node name="Thrusterpoint" type="Marker2D" parent="."]
 position = Vector2(0, 112)
@@ -72,6 +112,16 @@ scale = Vector2(0.08, 0.08)
 sprite_frames = SubResource("SpriteFrames_n3sgd")
 frame_progress = 0.737687
 
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Thrusterpoint"]
+show_behind_parent = true
+position = Vector2(0, 10)
+emitting = false
+amount = 1000
+process_material = SubResource("ParticleProcessMaterial_umyk3")
+texture = SubResource("NoiseTexture2D_07nlj")
+lifetime = 5.0
+randomness = 1.0
+
 [node name="RocketBody" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.3, 0.3)
 sprite_frames = SubResource("SpriteFrames_e2aqd")
@@ -79,3 +129,6 @@ animation = &"LandingGear"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(-57, 124, 56, 124, 14, 87, 13, -72, 6, -99, 0, -101, -6, -99, -14, -72, -14, 87, -57, 124)
+
+[node name="AIController2D" type="Node2D" parent="."]
+script = ExtResource("11_yu1wm")

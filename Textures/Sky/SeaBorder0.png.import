@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://btmkunp1wwrrb"
-path="res://.godot/imported/SeaBorder1.png-a4d9c81ad20e652320b427f21cbd00a0.ctex"
+uid="uid://dw12lmufoity"
+path="res://.godot/imported/SeaBorder0.png-40363e0d4d27002c2277a2ca004bae6c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/SeaBorder/SeaBorder1.png"
-dest_files=["res://.godot/imported/SeaBorder1.png-a4d9c81ad20e652320b427f21cbd00a0.ctex"]
+source_file="res://Textures/Sky/SeaBorder0.png"
+dest_files=["res://.godot/imported/SeaBorder0.png-40363e0d4d27002c2277a2ca004bae6c.ctex"]
 
 [params]
 

@@ -6,6 +6,7 @@ extends Node2D
 @onready var velocity = $UI/BoxContainer/Velocity
 @onready var time_left = $UI/BoxContainer/TimeLeft
 @onready var landings = $UI/BoxContainer/SuccessfulLandings
+@onready var rew = $UI/BoxContainer/Reward
 
 
 @onready var ship_sprite = $Scene/Ship/ShipSprite
@@ -67,11 +68,16 @@ func reset():
 	for i in number_of_rockets:
 		alive_rocket[i-1] = 1
 	
-	ship.global_position.x = randi_range(-13000,13000)
+	ship.global_position.x = randi_range(-10000,10000)
 	
 	for roc in get_tree().get_nodes_in_group("Rockets"):
-		roc.global_position = Vector2(randi_range(-10000, 10000), randi_range(1000, -500))
-		roc.rotation = 0
+		var randomx
+		if randi_range(0,1) == 0:
+			randomx = randi_range(-13000, ship.global_position.x - 2000)
+		else :
+			randomx = randi_range(13000, ship.global_position.x + 2000)
+		roc.global_position = Vector2(randomx, randi_range(1000, -500))
+		roc.rotation = deg_to_rad(randi_range(-60,60))
 		roc.linear_velocity = Vector2(0,0)
 	
 	selected_rocket = 0
@@ -149,7 +155,6 @@ func _process(delta):
 
 
 
-
 func _on_prev_pressed():
 	while(true):
 		if selected_rocket == 0:
@@ -171,3 +176,11 @@ func _on_next_pressed():
 		if alive_rocket[selected_rocket] == 1:
 			break
 
+
+@onready var ship_cam = $Scene/Ship/ShipCam
+
+func _on_ship_cam_pressed():
+	if ship_cam.enabled:
+		ship_cam.enabled = false
+	else:
+		ship_cam.enabled = true

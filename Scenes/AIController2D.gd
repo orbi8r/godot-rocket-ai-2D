@@ -1,10 +1,21 @@
 extends AIController2D
 
 @onready var rocket = $".."
+@onready var ship = $"../../Scene/Ship"
 
 
 func get_obs() -> Dictionary:
-	return {"obs": []}
+	return {"obs": [
+		rocket.ai_input,
+		rocket.is_dead,
+		rocket.global_position.x,
+		rocket.rotation,
+		rocket.angular_velocity,
+		rocket.linear_velocity.y,
+		rocket.linear_velocity.x,
+		rocket.position.y - ship.global_position.y,
+		rocket.position.x - ship.global_position.x - 800,
+	]}
 
 
 func get_reward() -> float:
@@ -13,24 +24,22 @@ func get_reward() -> float:
 
 func get_action_space() -> Dictionary:
 	return {
-		"thrust": {"size": 2, "action_type": "discrete"},
-		"leftright": {"size": 3, "action_type": "discrete"},
+		"AIinput": {"size": 4, "action_type": "discrete"},
 	}
 
 
 func set_action(action) -> void:
+
 	
-	if action["thrust"] >= 1:
-		rocket.is_thrusting = true
-	else:
+	if action["AIinput"] == 0:
+		rocket.ai_input = 0
 		rocket.is_thrusting = false
-	
-	if action["leftright"] == 2:
-		rocket.is_left = true
-		rocket.is_right = false
-	elif action["leftright"] == 0:
-		rocket.is_right = true
-		rocket.is_left = false
-	else:
-		rocket.is_left = false
-		rocket.is_right = false
+	elif action["AIinput"] == 1:
+		rocket.ai_input = 1
+		rocket.is_thrusting = true
+	elif action["AIinput"] == 2:
+		rocket.ai_input = 2
+		rocket.is_thrusting = true
+	elif action["AIinput"] == 3:
+		rocket.ai_input = 3
+		rocket.is_thrusting = true

@@ -80,7 +80,7 @@ shadow_color = Color(1, 1, 1, 0.992157)
 [node name="RocketField" type="Node2D"]
 position = Vector2(0, 28000)
 script = ExtResource("1_2b4ro")
-number_of_rockets = 3
+number_of_rockets = 25
 
 [node name="Scene" type="Node2D" parent="."]
 
@@ -99,6 +99,14 @@ texture = ExtResource("4_euwrv")
 [node name="ShipHitbox" type="CollisionShape2D" parent="Scene/Ship"]
 position = Vector2(892.5, 621)
 shape = SubResource("RectangleShape2D_4gn0q")
+
+[node name="ShipCam" type="Camera2D" parent="Scene/Ship"]
+offset = Vector2(750, 0)
+enabled = false
+zoom = Vector2(0.3, 0.3)
+limit_left = -15000
+limit_right = 15000
+limit_bottom = 29200
 
 [node name="SeaBorder" type="AnimatedSprite2D" parent="Scene"]
 position = Vector2(5, -14466.3)
@@ -184,23 +192,24 @@ layout_mode = 2
 text = "Landings:"
 label_settings = SubResource("LabelSettings_dfirq")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI"]
-offset_left = 24.0
-offset_top = 28486.0
-offset_right = 143.0
-offset_bottom = 28523.0
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/BoxContainer"]
+layout_mode = 2
 
-[node name="Prev" type="Button" parent="UI/HBoxContainer"]
+[node name="Prev" type="Button" parent="UI/BoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "< Prev"
 
-[node name="Next" type="Button" parent="UI/HBoxContainer"]
+[node name="Next" type="Button" parent="UI/BoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Next >"
 
+[node name="ShipCam" type="Button" parent="UI/BoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "(Ship Cam)"
+
 [node name="Sync" type="Node" parent="."]
 script = ExtResource("7_7kg0d")
-speed_up = 10.0
 
-[connection signal="pressed" from="UI/HBoxContainer/Prev" to="." method="_on_prev_pressed"]
-[connection signal="pressed" from="UI/HBoxContainer/Next" to="." method="_on_next_pressed"]
+[connection signal="pressed" from="UI/BoxContainer/HBoxContainer/Prev" to="." method="_on_prev_pressed"]
+[connection signal="pressed" from="UI/BoxContainer/HBoxContainer/Next" to="." method="_on_next_pressed"]
+[connection signal="pressed" from="UI/BoxContainer/HBoxContainer/ShipCam" to="." method="_on_ship_cam_pressed"]

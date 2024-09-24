@@ -101,7 +101,7 @@ animations = [{
 collision_layer = 2
 angular_damp = 10.0
 script = ExtResource("1_adxh4")
-thrustforce = 100
+thrustforce = 300
 
 [node name="Thrusterpoint" type="Marker2D" parent="."]
 position = Vector2(0, 112)

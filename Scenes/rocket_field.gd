@@ -68,16 +68,12 @@ func reset():
 	for i in number_of_rockets:
 		alive_rocket[i-1] = 1
 	
-	ship.global_position.x = randi_range(-10000,10000)
+	var shipx = randi_range(-10000,10000)
+	ship.global_position.x = shipx
 	
 	for roc in get_tree().get_nodes_in_group("Rockets"):
-		var randomx
-		if randi_range(0,1) == 0:
-			randomx = randi_range(-13000, ship.global_position.x - 2000)
-		else :
-			randomx = randi_range(13000, ship.global_position.x + 2000)
-		roc.global_position = Vector2(randomx, randi_range(1000, -500))
-		roc.rotation = deg_to_rad(randi_range(-60,60))
+		roc.global_position = Vector2(randi_range(shipx,shipx+1800), 28411)
+		roc.rotation = 0
 		roc.linear_velocity = Vector2(0,0)
 	
 	selected_rocket = 0
@@ -135,7 +131,7 @@ func _process(delta):
 				selected_rocket += 1
 			continue
 		
-		if roc.global_position.x < -15000 or roc.global_position.x > 15000 or roc.global_position.y < -2000 or roc.global_position.y > 28500 :
+		if roc.global_position.x < -15000 or roc.global_position.x > 15000 or roc.global_position.y < -2000 or roc.global_position.y > 29000 :
 			alive_rocket[rocindex] = 0
 			break
 		
@@ -177,10 +173,4 @@ func _on_next_pressed():
 			break
 
 
-@onready var ship_cam = $Scene/Ship/ShipCam
 
-func _on_ship_cam_pressed():
-	if ship_cam.enabled:
-		ship_cam.enabled = false
-	else:
-		ship_cam.enabled = true
